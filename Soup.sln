@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Soup", "SOUP\Soup.csproj", "{EC7EE752-CF1D-4B4E-9296-5AE544797CCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoupTest", "SoupTest\SoupTest.csproj", "{349EE2FA-FF5B-468C-B1A2-38F6A80EBA19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerRunner", "ServerRunner\ServerRunner.csproj", "{82F70044-4AE5-44D5-8989-2DE1C29C5AB9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC7EE752-CF1D-4B4E-9296-5AE544797CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC7EE752-CF1D-4B4E-9296-5AE544797CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC7EE752-CF1D-4B4E-9296-5AE544797CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC7EE752-CF1D-4B4E-9296-5AE544797CCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{349EE2FA-FF5B-468C-B1A2-38F6A80EBA19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{349EE2FA-FF5B-468C-B1A2-38F6A80EBA19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{349EE2FA-FF5B-468C-B1A2-38F6A80EBA19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{349EE2FA-FF5B-468C-B1A2-38F6A80EBA19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82F70044-4AE5-44D5-8989-2DE1C29C5AB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82F70044-4AE5-44D5-8989-2DE1C29C5AB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82F70044-4AE5-44D5-8989-2DE1C29C5AB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82F70044-4AE5-44D5-8989-2DE1C29C5AB9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3EEC0B64-A402-4ED9-ACC7-ABC6BEE56367}
+	EndGlobalSection
+EndGlobal

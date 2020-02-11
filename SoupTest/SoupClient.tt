@@ -1,0 +1,135 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ assembly name="$(TargetDir)Soup.dll" #>
+<#@ import namespace="Soup" #>
+using System;
+using System.Net;
+using System.Collections.Generic;
+
+namespace Soup
+{
+<#
+    var url = "http://localhost:8080";
+    var model = ServerModelHelper.GetClientModel(url);
+
+    Write(Environment.NewLine + "public static class " + model.ServerName+ "_Calls" + Environment.NewLine + "{" + Environment.NewLine);
+
+    if(model.ModelValidation)
+    {
+        Write(TabSpace(1) + "const int Hash = " + model.Hash + ";" + Environment.NewLine );
+    }
+
+    foreach(SoupClientModel.SoupType type in model.Types)
+    {
+        CreateType(type);
+    }
+
+    foreach(SoupClientModel.SoupMethod method in model.Methods)
+    {
+        CreateMethod(model, url, method);
+    }
+
+    Write("}" + Environment.NewLine);
+#>
+}
+<#+
+    void CreateType(SoupClientModel.SoupType type)
+    {
+        //Declare Type
+        Write(TabSpace(1) +"public class " + type.Name + Environment.NewLine + TabSpace(1) + "{" + Environment.NewLine);
+
+        //Add Type Properties
+        foreach(SoupClientModel.SoupParamProp param in type.Properties)
+        {
+            Write(TabSpace(2) + "public " + param.ParameterType + " " + param.ParameterName + ";" + Environment.NewLine);
+        }
+        Write(TabSpace(1) +"}" + Environment.NewLine);
+    }
+
+    void CreateMethod(SoupClientModel model, string url, SoupClientModel.SoupMethod method)
+    {
+        //Declare Method
+        Write(TabSpace(1) + "public static " + method.MethodReturnType + " " + method.MethodName + "(");
+
+        //Add Parameters if method has any
+        for(int p = 0; p < method.MethodParameters.Count; p++)
+        {
+            Write(method.MethodParameters[p].ParameterType + " " + method.MethodParameters[p].ParameterName);
+            if(p < method.MethodParameters.Count - 1 || method.ReturnCode)
+            {
+                Write(",");
+            }
+        }
+        //Add Out Return Code to parameters
+        if(method.ReturnCode)
+        {
+            Write("out HttpStatusCode code");
+        }
+        Write(")" + Environment.NewLine +TabSpace(1) + "{" + Environment.NewLine);
+
+        if(!method.ReturnCode)
+        {
+            Write(TabSpace(2) + "HttpStatusCode code;"+ Environment.NewLine);
+        }
+
+        //Build parameter dicitionary if method has paramers
+        var dictionary = "null";
+        if(method.MethodParameters.Count > 0 || model.ModelValidation)
+        {
+            Write(TabSpace(2) +"Dictionary<string, object> parameters = new Dictionary<string, object>()"+ Environment.NewLine + TabSpace(2) + "{"+ Environment.NewLine);
+            if(model.ModelValidation)
+            {
+                Write(TabSpace(3) +"{\"" + model.HashParameterName + "\", Hash},"+ Environment.NewLine);
+            }
+
+            foreach(SoupClientModel.SoupParamProp param in method.MethodParameters)
+            {
+                Write(TabSpace(3) +"{\"" + param.ParameterName + "\", "+ param.ParameterName + "},"+ Environment.NewLine);
+            }
+            
+            Write(TabSpace(2) + "};" + Environment.NewLine);
+            dictionary = "parameters";
+        }
+
+        //Remove return type if void expected
+        var returnType = "";
+        var callReturnValue = "";
+        var methodEnd = "";
+        if(method.MethodReturnType != "void")
+        {
+            returnType = "<" + method.MethodReturnType + ">";
+            callReturnValue = "var result = ";
+            methodEnd = Environment.NewLine + TabSpace(2) + "return result;";
+        }
+
+        //Call Type
+        var callMethod = "ApiMethod.Get";
+        if(method.Post)
+        {
+            callMethod = "ApiMethod.Post";
+        }
+
+        //Do Api Call
+        Write(TabSpace(2) + callReturnValue + "ApiCall.Call" + returnType + "(\"" + url +"/" + method.MethodName + "\", " + dictionary + ", " + callMethod + ", out code);");
+        if(!method.ReturnCode)
+        {
+            Write(Environment.NewLine + TabSpace(2) + "if(code != HttpStatusCode.OK){throw new Exception(\"Call Failed:\" + code.ToString());}");
+        }
+
+        Write(methodEnd);
+        Write(Environment.NewLine + TabSpace(1) + "}" + Environment.NewLine);
+    }
+
+    string TabSpace(int amount)
+    {
+        string tabs = "";
+        for(int i = 0; i < amount; i++)
+        {
+            tabs += "\t";
+        }
+        return tabs;
+    }
+#>
