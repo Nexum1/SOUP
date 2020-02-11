@@ -11,11 +11,7 @@ namespace SoupTest
     {
         static void Main(string[] args)
         {
-            /*Test_Calls.MethodChange();
-            Test_Calls.ParameterChange(1);
-            int ret = Test_Calls.ReturnTypeChanged();*/
-            Test_Calls.Control();
-            Test_Calls.Control2();
+            Console.WriteLine(TestServer_Calls.TestMethod());
             Console.Read();
         }
     }

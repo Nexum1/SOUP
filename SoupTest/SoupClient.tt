@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace Soup
 {
 <#
-    var url = "http://localhost:8080";
+    var url = "http://localhost:8090";
     var model = ServerModelHelper.GetClientModel(url);
 
     Write(Environment.NewLine + "public static class " + model.ServerName+ "_Calls" + Environment.NewLine + "{" + Environment.NewLine);

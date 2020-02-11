@@ -50,7 +50,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SoupClient.tt</DependentUpon>
     </Compile>
-    <Compile Include="Test.cs" />
+    <Compile Include="TestServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

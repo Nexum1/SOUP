@@ -5,28 +5,19 @@ using System.Collections.Generic;
 namespace Soup
 {
 
-public static class Test_Calls
+public static class TestServer_Calls
 {
-	const int Hash = -1131965206;
-	public static void Control()
+	const int Hash = 1046759330;
+	public static String TestMethod()
 	{
 		HttpStatusCode code;
 		Dictionary<string, object> parameters = new Dictionary<string, object>()
 		{
 			{"hsh", Hash},
 		};
-		ApiCall.Call("http://localhost:8080/Control", parameters, ApiMethod.Get, out code);
+		var result = ApiCall.Call<String>("http://localhost:8090/TestMethod", parameters, ApiMethod.Get, out code);
 		if(code != HttpStatusCode.OK){throw new Exception("Call Failed:" + code.ToString());}
-	}
-	public static void Control2()
-	{
-		HttpStatusCode code;
-		Dictionary<string, object> parameters = new Dictionary<string, object>()
-		{
-			{"hsh", Hash},
-		};
-		ApiCall.Call("http://localhost:8080/Control2", parameters, ApiMethod.Post, out code);
-		if(code != HttpStatusCode.OK){throw new Exception("Call Failed:" + code.ToString());}
+		return result;
 	}
 }
 }

@@ -12,7 +12,7 @@ namespace ServerRunner
     {
         static void Main(string[] args)
         {
-            SoupServer<Test> server = new SoupServer<Test>(true);
+            SoupServer<TestServer> server = new SoupServer<TestServer>(true, hostUrl: "http://*:8090/");
             server.Run();
             Console.Read();
         }
